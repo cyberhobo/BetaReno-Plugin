@@ -26,6 +26,9 @@ License: GPL2+
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+// Geo Masup customizations
+require_once( 'geo-mashup-custom.php' );
+
 add_action( 'init', array( 'BetaReno', 'action_init' ) );
 
 class BetaReno {
