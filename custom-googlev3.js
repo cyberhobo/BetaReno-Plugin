@@ -61,10 +61,6 @@
 				infoBubble: bubble_parts.join('')
 			} );
 			mxnmap.addMarker( add_marker );
-			add_marker.closeInfoBubble.addHandler( function() {
-				mxnmap.removeMarker( add_marker );
-				$add_start_button.show();
-			} );
 			add_marker.openBubble();
 			// openBubble has no working callback - go proprietary
 			google.maps.event.addListener( add_marker.proprietary_infowindow, 'domready', function() {
@@ -108,6 +104,11 @@
 						$where_input.val( results[0].formatted_address ).select();
 					}
 				} );
+			} );
+			// Handle cancellation
+			google.maps.event.addListener( add_marker.proprietary_infowindow, 'closeclick', function() {
+				mxnmap.removeMarker( add_marker );
+				$add_start_button.show();
 			} );
 		} );
 	} );
