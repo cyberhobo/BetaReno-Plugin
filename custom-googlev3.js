@@ -51,9 +51,9 @@
 			$where_input, $what_input, $who_select, $submit_button, autocomplete;
 
 		$add_start_button = parent.jQuery( '#add_start_button' ).click( function() {
-			var mxn_center = mxnmap.getCenter();
+			GeoMashup.deselectMarker();
 			$add_start_button.hide();
-			add_marker = new mxn.Marker( mxn_center );
+			add_marker = new mxn.Marker( mxnmap.getCenter() );
 			add_marker.addData( {
 				icon: properties.template_url_path + '/images/proposal-yellow.png',
 				iconSize: [ 18, 31 ],
@@ -89,21 +89,21 @@
 						}
 					})
 				});
-				autocomplete = new google.maps.places.Autocomplete( $where_input.get(0), { bounds: googlemap.getBounds() } );
+				autocomplete = new google.maps.places.Autocomplete( $where_input.get(0), {bounds: googlemap.getBounds()} );
 				autocomplete.bindTo( 'bounds', googlemap );
 				google.maps.event.addListener( autocomplete, 'place_changed', function() {
 					var new_location = autocomplete.getPlace().geometry.location;
 					add_marker.proprietary_marker.setPosition( new_location );
 					add_marker.update();
 					mxnmap.setCenter( add_marker.location );
-					geocoder.geocode( { location: add_marker.proprietary_marker.getPosition() }, function( results, status ) {
+					geocoder.geocode( {location: add_marker.proprietary_marker.getPosition()}, function( results, status ) {
 						if ( status == google.maps.GeocoderStatus.OK ) {
 							$where_input.val( results[0].formatted_address );
 						}
 					} );
 				} );
 
-				geocoder.geocode( { location: add_marker.proprietary_marker.getPosition() }, function( results, status ) {
+				geocoder.geocode( {location: add_marker.proprietary_marker.getPosition()}, function( results, status ) {
 					if ( status == google.maps.GeocoderStatus.OK ) {
 						$where_input.val( results[0].formatted_address ).select();
 					}
@@ -119,8 +119,6 @@
 
 		google_map.mapTypes.set( 'betareno', map_type );
 		google_map.setMapTypeId( 'betareno' );
-
-
 
 	} );
 
